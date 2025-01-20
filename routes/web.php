@@ -3,24 +3,21 @@
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-  return view('index');
-})->name('show.index')->middleware('guest');
+// this is home
+Route::view('/', 'index')->name('home');
 
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
+// register
+Route::get('/register', [AuthController::class, 'showRegister'])->name('show.register');
+Route::post('/register', [AuthController::class, 'register'])->name('register');
 
-Route::middleware('guest')->controller(AuthController::class)->group(function () {
-  Route::get('/register', 'showRegister')->name('show.register');
-  Route::get('/login', 'showLogin')->name('show.login');
-  Route::post('/register', 'register')->name('register');
-  Route::post('/login', 'login')->name('login');
-});
+// login
+Route::get('/login', [AuthController::class, 'showLogin'])->name('show.login');
+Route::post('/login', [AuthController::class, 'login'])->name('login');
 
-Route::middleware('auth')->group(function () {
-  Route::get('/feed', function () {
-    return view('feed.index');
-  })->name('show.feed');
-  Route::get('/feed/create', function () {
-    return view('feed.create');
-  })->name('create.feed');
-});
+// logout
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+// feed
+Route::get('/feed', function () {
+  return view('feed.index');
+})->name('feed.index')->middleware('auth');

@@ -1,28 +1,23 @@
 <x-layout>
-  <form action="{{ route('login') }}" method="POST" class="space-y-5">
+
+  {{-- login form --}}
+  <form action="{{ route('login') }}" method="POST" class="space-y-5 max-w-[60%] mx-auto">
     @csrf
 
-    <div class="text-center font-bold">Login</div>
+    {{-- title --}}
+    <x-title title="Login your account." />
 
-    <section class="flex flex-col gap-2">
-      <label for="email">Email</label>
-      <input required class="border rounded px-3 py-2" type="email" name="email" id="email" value="{{ old('email') }}">
-      @error('email')
-      <p class="text-red-500 text-sm">{{ $message }}</p>
-      @enderror
-    </section>
+    <div class="my-2">
+      <x-form.error name="invalid" />
+    </div>
 
-    <section class="flex flex-col gap-2">
-      <label for="password">Password</label>
-      <input required class="border rounded px-3 py-2" type="password" name="password" id="password"
-        value="{{ old('password') }}">
-      @error('password')
-      <p class="text-red-500 text-sm">{{ $message }}</p>
-      @enderror
-    </section>
+    {{-- email --}}
+    <x-form.input label="Email" name_id="email" type="text" />
 
-    <button type="submit" class="w-full text-white text-center px-5 py-2 bg-gray-500 rounded hover:opacity-70">
-      Login
-    </button>
+    {{-- password --}}
+    <x-form.input label="Password" name_id="password" type="password" />
+
+    {{-- submit button --}}
+    <x-form.button label="Login" />
   </form>
 </x-layout>
