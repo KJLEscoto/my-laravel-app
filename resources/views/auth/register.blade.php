@@ -5,7 +5,7 @@
     @csrf
 
     {{-- title --}}
-    <x-title title="Register a new account." />
+    <x-title title="Register a new account" />
 
     {{-- username --}}
     <x-form.input label="Username" name_id="username" />

@@ -1,23 +1,35 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\BookController;
 use Illuminate\Support\Facades\Route;
 
 // this is home
-Route::view('/', 'index')->name('home');
+// Route::view('/', 'posts.index')->name('home');
 
-// register
-Route::get('/register', [AuthController::class, 'showRegister'])->name('show.register');
-Route::post('/register', [AuthController::class, 'register'])->name('register');
+// default route to posts resource
+Route::redirect('/', 'books');
 
-// login
-Route::get('/login', [AuthController::class, 'showLogin'])->name('show.login');
-Route::post('/login', [AuthController::class, 'login'])->name('login');
+// post route resource
+Route::resource('books', BookController::class);
+  
+// only for auth users
+Route::middleware('auth')->group(function () {
+  // dashboard
+  Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-// logout
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+  // logout
+  Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+});
 
-// feed
-Route::get('/feed', function () {
-  return view('feed.index');
-})->name('feed.index')->middleware('auth');
+// only for guest
+Route::middleware('guest')->group(function () {
+  // register
+  Route::get('/register', [AuthController::class, 'showRegister'])->name('show.register');
+  Route::post('/register', [AuthController::class, 'register'])->name('register');
+
+  // login
+  Route::get('/login', [AuthController::class, 'showLogin'])->name('show.login');
+  Route::post('/login', [AuthController::class, 'login'])->name('login');
+});

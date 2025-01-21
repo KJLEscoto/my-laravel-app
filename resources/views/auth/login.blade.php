@@ -5,7 +5,7 @@
     @csrf
 
     {{-- title --}}
-    <x-title title="Login your account." />
+    <x-title title="Login your account" />
 
     <div class="my-2">
       <x-form.error name="invalid" />

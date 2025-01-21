@@ -13,10 +13,15 @@
 
   {{-- for guest --}}
   @guest
-  <div class="flex gap-10 justify-between py-5 px-40 shadow-md items-center">
-    <a href="{{ route('home') }}">
-      <h1>My Laravel App</h1>
-    </a>
+  <div class="flex gap-10 justify-between py-5 px-40 shadow-md items-center fixed z-50 bg-white w-full">
+    <div class="flex items-center gap-5">
+      <a href="{{ route('books.index') }}">
+        <h1>Books</h1>
+      </a>
+      <a href="{{ route('books.create') }}">
+        <h1>Publish</h1>
+      </a>
+    </div>
     <div class="flex gap-3 items-center">
       <a href="{{ route('show.login') }}">Login</a>
       <a href="{{ route('show.register') }}">Register</a>
@@ -27,10 +32,18 @@
 
   {{-- for auth user --}}
   @auth
-  <div class="flex gap-10 justify-between py-5 px-40 shadow-md items-center">
-    <a href="{{ route('feed.index') }}">
-      <h1>My Laravel App</h1>
-    </a>
+  <div class="flex gap-10 justify-between py-5 px-40 shadow-md items-center fixed z-50 bg-white w-full">
+    <div class="flex items-center gap-5">
+      <a href="{{ route('books.index') }}">
+        <h1>Books</h1>
+      </a>
+      <a href="{{ route('books.create') }}">
+        <h1>Publish</h1>
+      </a>
+      <a href="{{ route('dashboard') }}">
+        <h1>Dashboard</h1>
+      </a>
+    </div>
 
     {{-- dropdown --}}
     <div x-data="{ open: false }" class="relative flex items-start justify-center">
@@ -55,7 +68,7 @@
   </div>
   @endauth
 
-  <div class="py-10 h-full w-full px-40">
+  <div class="pt-28 py-10 h-full w-full px-40">
     {{ $slot }}
   </div>
 </body>

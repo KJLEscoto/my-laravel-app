@@ -18,7 +18,7 @@ class AuthController extends Controller
   // register logic validation
   public function register(Request $request) {
 
-    // validate
+    // validate input
     $data = $request->validate([
       'username' => 'required|min:3|max:255',
       'email' => 'required|email|unique:users',
@@ -32,7 +32,7 @@ class AuthController extends Controller
     Auth::login($user);
 
     // redirect
-    return redirect()->route('feed.index');
+    return redirect()->route('books.index');
   }
 
   // display login form
@@ -43,7 +43,7 @@ class AuthController extends Controller
   // login logic validation
   public function login (Request $request) {
 
-    // validate
+    // validate input
     $data = $request->validate([
       'email' => 'required|email',
       'password' => 'required'
@@ -53,8 +53,16 @@ class AuthController extends Controller
     if (Auth::attempt($data)) {
 
       // redirect to intended path
-      return redirect()->route('feed.index');
-    }
+      return redirect()->intended(route('books.index'));
+    } 
+    // else {
+
+    //   // back with error message
+    //   return back()->withErrors([
+    //     'invalid' => 'Invalid login credentials.'
+    //   ]);
+    // }
+
 
     // validation error
     throw ValidationException::withMessages([
@@ -64,11 +72,15 @@ class AuthController extends Controller
 
   // logout logic
   public function logout(Request $request) {
+
+    // logout user
     Auth::logout();
 
+    // session
     $request->session()->invalidate();
     $request->session()->regenerateToken();
 
-    return redirect()->route('home');
+    // redirect
+    return redirect()->route('books.index');
   }
 }
