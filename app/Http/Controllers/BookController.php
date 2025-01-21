@@ -16,7 +16,7 @@ class BookController extends Controller
      */
     public function index()
     {
-        $books = Book::latest()->paginate(9);
+        $books = Book::latest()->paginate(12);
         return view('books.index', ['books' => $books]);
     }
 
@@ -26,8 +26,9 @@ class BookController extends Controller
     public function create()
     {
         if (Auth::user()) {
-            return view('books.create');
+            $books = Auth::user()->books()->latest()->paginate(8);
             
+            return view('books.create', ['books' => $books]);
         }
         return redirect()->route('show.login');
     }
@@ -45,7 +46,7 @@ class BookController extends Controller
 
         Auth::user()->books()->create($data);
 
-        return redirect()->route('books.index')->with([
+        return redirect()->route('books.create')->with([
             'success' => 'Your book is now published.'
         ]);
 

@@ -51,7 +51,7 @@
       {{-- dropdown button --}}
       <button @click="open = !open"
         class="rounded-full focus:outline-none focus:ring-1 focus:ring-gray-300 active:ring-1 p-1">
-        <img class="w-10 h-10 object-cover rounded-full" src="https://picsum.photos/200" alt="Sample Image">
+        <img class="w-10 h-10 object-cover rounded-full border" src="https://picsum.photos/200" alt="Sample Image">
       </button>
 
       {{-- dropdown menu --}}
